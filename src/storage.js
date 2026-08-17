@@ -2,8 +2,9 @@ import { fromStorageRecord, toStorageRecord } from './tagUtils.js';
 
 const localKey = 'm3-tag-records';
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+const runtimeConfig = globalThis.window?.M3_TAGS_CONFIG || {};
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || runtimeConfig.supabaseUrl;
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || runtimeConfig.supabaseAnonKey;
 
 export const storageMode = supabaseUrl && supabaseAnonKey ? 'supabase' : 'local';
 
@@ -51,13 +52,14 @@ export async function listRecords() {
 export async function saveRecord(record) {
   if (storageMode === 'supabase') {
     const payload = toStorageRecord(record);
-    const path = record.id
+    const path = record.id && isUuid(record.id)
       ? `tag_records?id=eq.${encodeURIComponent(record.id)}`
-      : 'tag_records';
-    const method = record.id ? 'PATCH' : 'POST';
+      : 'tag_records?on_conflict=document_id';
+    const method = record.id && isUuid(record.id) ? 'PATCH' : 'POST';
     const [saved] = await supabaseFetch(path, {
       method,
-      body: JSON.stringify(record.id ? { ...payload, updated_at: new Date().toISOString() } : payload),
+      headers: method === 'POST' ? { Prefer: 'resolution=merge-duplicates,return=representation' } : undefined,
+      body: JSON.stringify(method === 'PATCH' ? { ...payload, updated_at: new Date().toISOString() } : payload),
     });
     return fromStorageRecord(saved);
   }
@@ -87,7 +89,7 @@ export async function deleteRecord(id) {
 
 export async function replaceRecords(records) {
   if (storageMode === 'supabase') {
-    const saved = await supabaseFetch('tag_records', {
+    const saved = await supabaseFetch('tag_records?on_conflict=document_id', {
       method: 'POST',
       headers: { Prefer: 'resolution=merge-duplicates,return=representation' },
       body: JSON.stringify(records.map(toStorageRecord)),
@@ -102,4 +104,8 @@ export async function replaceRecords(records) {
   }));
   writeLocal(normalized);
   return normalized;
+}
+
+function isUuid(value) {
+  return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value || '');
 }

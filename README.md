@@ -31,3 +31,5 @@ VITE_SUPABASE_ANON_KEY=你的 Supabase anon public key
 ```
 
 未填写环境变量时，应用会使用浏览器本地存储。
+
+也可以在部署后的静态站点中编辑 `public/config.js` 或同名部署文件，将 Supabase URL 和 anon key 写入 `window.M3_TAGS_CONFIG`。应用优先读取 Vite 环境变量；没有环境变量时读取运行时配置文件。
