@@ -1,3 +1,5 @@
+create extension if not exists pgcrypto;
+
 create table if not exists public.tag_records (
   id uuid primary key default gen_random_uuid(),
   document_id text not null unique,
@@ -51,3 +53,5 @@ create policy "tag_records_delete_all"
 on public.tag_records for delete
 to anon
 using (true);
+
+notify pgrst, 'reload schema';

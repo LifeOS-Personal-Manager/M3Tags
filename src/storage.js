@@ -22,7 +22,7 @@ async function supabaseFetch(path, options = {}) {
 
   if (!response.ok) {
     const message = await response.text();
-    throw new Error(message || `Supabase request failed: ${response.status}`);
+    throw new Error(formatSupabaseError(message, response.status));
   }
 
   if (response.status === 204) return null;
@@ -108,4 +108,16 @@ export async function replaceRecords(records) {
 
 function isUuid(value) {
   return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value || '');
+}
+
+function formatSupabaseError(message, status) {
+  try {
+    const error = JSON.parse(message);
+    if (error.code === 'PGRST205') {
+      return 'Supabase 未找到 public.tag_records 表。请先在 Supabase SQL Editor 执行 supabase.schema.sql，然后刷新页面。';
+    }
+    return error.message || message || `Supabase request failed: ${status}`;
+  } catch {
+    return message || `Supabase request failed: ${status}`;
+  }
 }
