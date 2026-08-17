@@ -3,8 +3,8 @@ import { fromStorageRecord, toStorageRecord } from './tagUtils.js';
 const localKey = 'm3-tag-records';
 
 const runtimeConfig = globalThis.window?.M3_TAGS_CONFIG || {};
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || runtimeConfig.supabaseUrl;
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || runtimeConfig.supabaseAnonKey;
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || import.meta.env.NEXT_PUBLIC_SUPABASE_URL || runtimeConfig.supabaseUrl;
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || import.meta.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || runtimeConfig.supabaseAnonKey;
 
 export const storageMode = supabaseUrl && supabaseAnonKey ? 'supabase' : 'local';
 
