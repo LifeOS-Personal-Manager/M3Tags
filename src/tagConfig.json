@@ -1,0 +1,105 @@
+{
+  "fields": [
+    { "key": "documentId", "label": "文档ID", "required": true, "control": "readonly", "description": "唯一识别。规则：WJ + 年月日 + 两位序号。" },
+    { "key": "title", "label": "文档标题", "required": true, "control": "input", "description": "文档的可读名称。" },
+    { "key": "domain", "label": "领域", "required": true, "control": "select", "description": "一级板块。" },
+    { "key": "subdomain", "label": "子领域", "required": false, "control": "cascader", "description": "领域下的细分板块。" },
+    { "key": "stage", "label": "阶段", "required": true, "control": "select", "description": "这件事处在什么生命周期。" },
+    { "key": "elementType", "label": "要素类型", "required": false, "control": "select", "description": "这份文档是什么性质。" },
+    { "key": "status", "label": "处理状态", "required": false, "control": "select", "description": "现在要怎么处理它。" },
+    { "key": "priority", "label": "优先级", "required": false, "control": "segmented", "description": "它应占用多少近期注意力。" },
+    { "key": "nextAction", "label": "下一步", "required": false, "control": "textarea", "description": "让文档从资料变成行动入口。" },
+    { "key": "reviewDate", "label": "回顾日期", "required": false, "control": "date", "description": "提醒何时重新查看。" },
+    { "key": "note", "label": "备注", "required": false, "control": "textarea", "description": "补充上下文、交叉领域或判断依据。" }
+  ],
+  "domains": [
+    { "name": "系统控制", "description": "管理个人系统本身：目标、资源、实践机制、信息档案与复盘控制" },
+    { "name": "生活统筹", "description": "个人生活的总入口：日常事务、健康、财务、关系与理想生活建设" },
+    { "name": "职业发展", "description": "职场角色与组织协作：业务、个人成长、团队与向上管理" },
+    { "name": "事业管理", "description": "长期事业经营：自媒体、业务品牌、产品线、项目与商业机会" },
+    { "name": "学习成长", "description": "知识与能力输入：课程、阅读、技能训练、研究主题与沉淀" }
+  ],
+  "subdomains": {
+    "系统控制": [
+      { "name": "目标管理", "positioning": "管理年度、季度、月度和阶段目标", "examples": "年度目标表、月度重点、OKR、关键结果复盘", "boundary": "具体执行文档仍归所属业务领域" },
+      { "name": "资源管理", "positioning": "管理时间、精力、注意力、工具、预算等通用资源", "examples": "时间预算、精力分配、工具清单、资源盘点", "boundary": "具体资金配置归生活统筹/资产财务" },
+      { "name": "实践系统管理", "positioning": "管理行动方法、习惯机制、流程和个人操作系统", "examples": "晨间流程、周计划机制、任务流转规则", "boundary": "单个项目计划放对应领域" },
+      { "name": "信息档案管理", "positioning": "管理文件、资料库、命名规则、备份和标签标准", "examples": "文档编号规则、资料归档、标签系统、小程序字段", "boundary": "具体资料仍按内容领域归类" },
+      { "name": "其他", "positioning": "临时无法归入以上系统控制子领域的事项", "examples": "待判断系统事项、临时结构调整", "boundary": "每月清理，能归类时不要长期放其他" }
+    ],
+    "生活统筹": [
+      { "name": "日常事务", "positioning": "生活杂务、居住、家务、证照、行程与采购", "examples": "搬家清单、证照整理、家庭采购、出行安排", "boundary": "钱的长期规划放资产财务" },
+      { "name": "身心健康", "positioning": "身体、心理、睡眠、运动、饮食和医疗管理", "examples": "体检跟进、睡眠改善、运动计划、就诊记录", "boundary": "医疗报销可备注关联资产财务" },
+      { "name": "资产财务", "positioning": "个人和家庭的钱、资产、风险与长期财务安排", "examples": "Q3理财规划、保险配置、预算表、税务资料", "boundary": "普通购物不一定放这里，除非影响预算或资产" },
+      { "name": "关系人脉", "positioning": "私人关系、家庭沟通、朋友维护和重要联系人", "examples": "联系人清单、家庭沟通、朋友维护、重要对话记录", "boundary": "纯职场协作可放职业发展" },
+      { "name": "我的理想国", "positioning": "理想生活、精神世界、审美趣味和个人内在秩序", "examples": "理想生活蓝图、阅读写作愿景、生活方式设计", "boundary": "作品化或商业化后可关联事业管理" },
+      { "name": "其他", "positioning": "临时无法归入以上生活子领域的事项", "examples": "临时生活杂项、待判断生活事务", "boundary": "每月清理，优先归入明确子领域" }
+    ],
+    "职业发展": [
+      { "name": "业务管理", "positioning": "当前岗位、业务目标、交付事项和工作项目管理", "examples": "业务计划、客户方案、项目复盘、工作周报", "boundary": "长期事业产品线归事业管理" },
+      { "name": "个人管理", "positioning": "职业角色下的自我管理、绩效、节奏和工作习惯", "examples": "绩效材料、工作习惯、职业复盘、履历记录", "boundary": "通用个人系统放系统控制" },
+      { "name": "知识技能", "positioning": "职业所需专业知识、技能栈和能力证明", "examples": "岗位能力盘点、技能证书、专业训练计划", "boundary": "泛兴趣学习放学习成长" },
+      { "name": "团队管理", "positioning": "团队协作、人员培养、分工、会议和管理动作", "examples": "团队例会、人员培养、任务分派、协作规则", "boundary": "私人关系维护放生活统筹/关系人脉" },
+      { "name": "向上管理", "positioning": "与上级、组织目标、汇报沟通和资源争取相关事项", "examples": "汇报材料、向上沟通、资源申请、组织目标对齐", "boundary": "非职场权责关系不放这里" },
+      { "name": "其他", "positioning": "临时无法归入以上职业子领域的事项", "examples": "待判断职业事项、临时工作记录", "boundary": "每月清理，避免职业杂项堆积" }
+    ],
+    "事业管理": [
+      { "name": "自媒体运行", "positioning": "自媒体账号、内容发布、渠道增长和运营复盘", "examples": "选题库、发布日历、账号数据、内容复盘", "boundary": "未准备发布的学习资料放学习成长" },
+      { "name": "广和企丰", "positioning": "市场营销及活动管理相关事业板块", "examples": "营销方案、活动策划、客户线索、项目复盘", "boundary": "纯职场岗位交付可放职业发展/业务管理" },
+      { "name": "广和睿研", "positioning": "精准医学及临床研究相关事业板块", "examples": "研究项目、临床方案、合作资源、行业资料", "boundary": "基础学习材料可关联学习成长" },
+      { "name": "广和众安", "positioning": "大众健康及诊疗产品相关事业板块", "examples": "产品规划、诊疗服务、用户需求、商业模式", "boundary": "个人健康记录放生活统筹/身心健康" },
+      { "name": "文隽诗社", "positioning": "文学创作、诗社运营、作品沉淀与发布", "examples": "诗歌作品、文学活动、社群运营、作品集", "boundary": "纯私人阅读可放生活统筹/我的理想国或学习成长" },
+      { "name": "其他", "positioning": "临时无法归入以上事业子领域的事项", "examples": "新事业想法、待命名项目、合作可能性", "boundary": "成熟后应拆入具体事业板块" }
+    ],
+    "学习成长": [
+      { "name": "课程学习", "positioning": "课程型学习、训练营、作业和证书", "examples": "课程笔记、作业、证书、学习计划", "boundary": "用于工作项目时备注关联职业发展" },
+      { "name": "阅读笔记", "positioning": "阅读、摘录、书单和读书总结", "examples": "书单、摘录、读书总结、主题阅读", "boundary": "准备公开发布或产品化时转事业管理" },
+      { "name": "技能训练", "positioning": "语言、工具、技术、表达等长期训练", "examples": "英语、编程、AI工具、表达训练", "boundary": "职业强相关可备注关联职业发展" },
+      { "name": "研究主题", "positioning": "专题研究、知识框架和问题探索", "examples": "AI专题研究、行业资料、研究框架", "boundary": "形成产品线后可转事业管理" },
+      { "name": "其他", "positioning": "临时无法归入以上学习子领域的事项", "examples": "待判断学习资料、临时知识点", "boundary": "每月清理，优先归入明确学习主题" }
+    ]
+  },
+  "stages": [
+    { "name": "灵感", "description": "刚冒出来，未判断价值" },
+    { "name": "收集", "description": "材料、资料、信息暂存" },
+    { "name": "计划", "description": "已决定要做，正在设计路径" },
+    { "name": "项目", "description": "正在推进，有明确目标" },
+    { "name": "跟进", "description": "等待反馈、结果或时间点" },
+    { "name": "复盘", "description": "已完成，正在总结经验" },
+    { "name": "档案", "description": "暂无动作，只作保存" },
+    { "name": "废弃", "description": "明确不再使用，但保留记录" }
+  ],
+  "elementTypes": [
+    { "name": "想法灵感", "description": "一个念头、一个设想" },
+    { "name": "信息资源", "description": "资料、链接、参考内容" },
+    { "name": "决策记录", "description": "为什么做某个选择" },
+    { "name": "行动清单", "description": "待办、步骤、任务" },
+    { "name": "计划方案", "description": "规划、路线图" },
+    { "name": "复盘总结", "description": "经验、反思、结论" },
+    { "name": "模板工具", "description": "可复用格式、流程" },
+    { "name": "档案凭证", "description": "合同、账单、证件、记录" }
+  ],
+  "statuses": [
+    { "name": "待处理", "description": "还没看、没判断" },
+    { "name": "进行中", "description": "正在推进" },
+    { "name": "等待中", "description": "等结果、等反馈、等时间点" },
+    { "name": "已完成", "description": "目标完成" },
+    { "name": "定期回顾", "description": "需要周期性检查" },
+    { "name": "暂停", "description": "现在不做，但未来可能恢复" },
+    { "name": "已归档", "description": "不需要动作" },
+    { "name": "已废弃", "description": "明确不用" }
+  ],
+  "priorities": [
+    { "name": "🔥", "label": "P1", "description": "近期必须处理，高影响或有截止" },
+    { "name": "⭐", "label": "P2", "description": "重要，但不一定紧急" },
+    { "name": "⏳", "label": "P3", "description": "有价值，等待时机" },
+    { "name": "🧊", "label": "P4", "description": "低优先，存档观察" }
+  ],
+  "coverageRules": [
+    { "rule": "一级领域不超过 5 个", "description": "保持首页入口稳定，避免领域膨胀。" },
+    { "rule": "每个领域必须有“其他”", "description": "新事项先兜底，但不能长期沉淀。" },
+    { "rule": "每月清理“其他”", "description": "如果同类事项连续出现 3 次，应新增或调整子领域。" },
+    { "rule": "主领域只选一个", "description": "交叉关系写备注，不要多选领域。" },
+    { "rule": "项目名不做领域", "description": "项目应进入子领域，并通过标题、阶段、状态管理。" }
+  ]
+}
