@@ -8,7 +8,8 @@
     "dev": "vite --host 0.0.0.0",
     "build": "vite build && node scripts/create-sites-worker.mjs",
     "preview": "vite preview --host 0.0.0.0",
-    "test": "vitest run"
+    "test": "vitest run",
+    "deploy:cloudflare": "npm run build && wrangler pages deploy dist --project-name m3tags --branch main"
   },
   "dependencies": {
     "@vitejs/plugin-react": "^4.3.4",
